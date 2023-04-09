@@ -20,6 +20,7 @@ sound_map = {
 
 
 def on_press(event):
+    print(event.scan_code)
     try:
         if event.event_type == 'down' and event.scan_code in sound_map.keys():
             sound = sound_map.get(event.scan_code)
@@ -29,10 +30,11 @@ def on_press(event):
                 "sound": sound
             }
             response = requests.post(URL, data=json.dumps(data))
+            print(f'Send request to play sound {sound}...')
             if response.status_code == 200:
                 print('Playing sound ' + sound)
-    except Exception as e:
-        print(e)
+    except:
+        print("Some error occured while sending request")
         
 
 keyboard.on_press(on_press)
